@@ -1,5 +1,13 @@
-# Prerequisites
-*.d
+# Idea
+.idea/
+
+# Emacs
+*~
+.#*
+
+# CMake
+cmake-build-debug/
+cmake-build-release/
 
 # Compiled Object files
 *.slo

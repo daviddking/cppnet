@@ -1,2 +1,2 @@
 # cppnet
-C++ networking presentation for MPCS51045
+C++ networking presentation for MPCS-51045
