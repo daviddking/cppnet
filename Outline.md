@@ -4,4 +4,8 @@
   stack. Along the way we'll learn (or refresh) our knowledge of
   networking and learn how to wield the C++ networking APIs.
 
+
+* Asynchronous and synchronous operations side-by-side
+* What's going on in io.run()?
+
 * Co-routines? See Kohlhoff's BoostCon11 presentation

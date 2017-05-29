@@ -18,3 +18,12 @@ target_link_libraries(boost_synch_timer ${Boost_LIBRARIES})
 
 add_executable(netts_synch_timer netts_synch_timer.cpp)
 target_link_libraries(netts_synch_timer ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(netts_asynch_timer netts_asynch_timer.cpp)
+target_link_libraries(netts_asynch_timer ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(netts_asynch_repeating_timer netts_asynch_repeating_timer.cpp)
+target_link_libraries(netts_asynch_repeating_timer ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(netts_asynch_repeating_timer2 netts_asynch_repeating_timer2.cpp)
+target_link_libraries(netts_asynch_repeating_timer2 ${CMAKE_THREAD_LIBS_INIT})

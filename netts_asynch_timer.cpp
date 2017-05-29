@@ -10,7 +10,9 @@ using namespace std::literals::chrono_literals;
 int main() {
     io_context io;
     system_timer timer{io, 3s};
-    timer.wait();
-    cout << "Timer fired!" << endl;
+    timer.async_wait([](const error_code &status) {
+        cout << "Timer fired!" << endl;
+    });
+    io.run();
     return 0;
 }
