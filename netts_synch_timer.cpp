@@ -1,0 +1,15 @@
+#include <iostream>
+#include <chrono>
+#include <experimental/io_context>
+#include <experimental/timer>
+
+using namespace std;
+using namespace std::experimental::net;
+using namespace std::literals::chrono_literals;
+
+int main() {
+    io_context io;
+    system_timer timer{io, 3s};
+    timer.wait();
+    return 0;
+}
