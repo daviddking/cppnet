@@ -13,17 +13,14 @@ find_package(Threads REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${NETWORKING_TS_ROOT}/include)
 
-add_executable(boost_synch_timer boost_synch_timer.cpp)
-target_link_libraries(boost_synch_timer ${Boost_LIBRARIES})
+add_executable(timer_sync timer_synch.cpp)
+target_link_libraries(timer_sync ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(netts_synch_timer netts_synch_timer.cpp)
-target_link_libraries(netts_synch_timer ${CMAKE_THREAD_LIBS_INIT})
+add_executable(timer_asynch timer_asynch.cpp)
+target_link_libraries(timer_asynch ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(netts_asynch_timer netts_asynch_timer.cpp)
-target_link_libraries(netts_asynch_timer ${CMAKE_THREAD_LIBS_INIT})
+add_executable(timer_asynch_repeating timer_asynch_repeating.cpp)
+target_link_libraries(timer_asynch_repeating ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(netts_asynch_repeating_timer netts_asynch_repeating_timer.cpp)
-target_link_libraries(netts_asynch_repeating_timer ${CMAKE_THREAD_LIBS_INIT})
-
-add_executable(netts_asynch_repeating_timer2 netts_asynch_repeating_timer2.cpp)
-target_link_libraries(netts_asynch_repeating_timer2 ${CMAKE_THREAD_LIBS_INIT})
+add_executable(timer_asynch_repeating2 timer_asynch_repeating2.cpp)
+target_link_libraries(timer_asynch_repeating2 ${CMAKE_THREAD_LIBS_INIT})
