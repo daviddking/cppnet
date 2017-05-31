@@ -27,8 +27,14 @@ target_link_libraries(timer_asynch_repeating ${CMAKE_THREAD_LIBS_INIT})
 add_executable(timer_asynch_repeating2 timer_asynch_repeating2.cpp)
 target_link_libraries(timer_asynch_repeating2 ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(daytime_server_synch_tcp daytime_server_synch_tcp.cpp clion_syntax_highlight.h)
+add_executable(daytime_server_synch_udp daytime_server_synch_udp.cpp daytime.h)
+target_link_libraries(daytime_server_synch_udp ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(daytime_client_synch_udp daytime_client_synch_udp.cpp daytime.h)
+target_link_libraries(daytime_client_synch_udp ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(daytime_server_synch_tcp daytime_server_synch_tcp.cpp daytime.h)
 target_link_libraries(daytime_server_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(daytime_client_synch_tcp daytime_client_synch_tcp.cpp clion_syntax_highlight.h)
+add_executable(daytime_client_synch_tcp daytime_client_synch_tcp.cpp)
 target_link_libraries(daytime_client_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
