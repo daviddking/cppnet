@@ -29,3 +29,6 @@ target_link_libraries(timer_asynch_repeating2 ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(daytime_server_synch_tcp daytime_server_synch_tcp.cpp clion_syntax_highlight.h)
 target_link_libraries(daytime_server_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(daytime_client_synch_tcp daytime_client_synch_tcp.cpp clion_syntax_highlight.h)
+target_link_libraries(daytime_client_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
