@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.7)
 project(cppnet)
 
 set(CMAKE_CXX_STANDARD 14)
-#set(NETWORKING_TS_ROOT "/home/david/git/networking-ts-impl")
-set(NETWORKING_TS_ROOT "/Users/dking/git/networking-ts-impl")
+set(NETWORKING_TS_ROOT "/home/david/git/networking-ts-impl")
+#set(NETWORKING_TS_ROOT "/Users/dking/git/networking-ts-impl")
 
 # Requires boost
 # To install boost on Ubuntu:
@@ -38,3 +38,7 @@ target_link_libraries(daytime_server_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(daytime_client_synch_tcp daytime_client_synch_tcp.cpp)
 target_link_libraries(daytime_client_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
+
+add_executable(daytime_server_asynch daytime_server_asynch.cpp daytime.h)
+target_link_libraries(daytime_server_asynch ${CMAKE_THREAD_LIBS_INIT})
+
