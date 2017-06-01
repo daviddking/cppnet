@@ -1,6 +1,7 @@
 #include <iostream>
 #include <experimental/net>
 #include "daytime.h"
+#include "../networking-ts-impl/include/experimental/__net_ts/ip/tcp.hpp"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "CannotResolve"
@@ -19,7 +20,10 @@ public:
     daytime_tcp_connection(tcp::socket&& client_socket)  :
             client_socket{std::move(client_socket)},
             result{}, total_bytes_written{0}
-    {}
+    {
+        tcp::no_delay option{true};
+        client_socket.set_option(option);
+    }
 
     void start() {
         result = current_date_and_time();
