@@ -74,10 +74,52 @@ private:
     tcp::acceptor acceptor;
 };
 
+class daytime_udp_server {
+public:
+    daytime_udp_server(shared_ptr<io_context> io, unsigned short listen_port) :
+            io{io}, socket{*io, udp::endpoint{udp::v4(), listen_port}}
+    {
+        cout << "Listening on UDP port " << listen_port << "..." << endl;
+        start_receive();
+    }
+
+    void start_receive() {
+       socket.async_receive_from(
+            buffer(receive_buffer),
+            remote_endpoint,
+            std::bind(&daytime_udp_server::receive_handler, this, _1, _2)
+       );
+    }
+
+    void receive_handler(const error_code& error, size_t bytes_transferred) {
+        if (!error) {
+            auto message = make_shared<string>(current_date_and_time());
+            socket.async_send_to(
+                    buffer(*message),
+                    remote_endpoint,
+                    std::bind(&daytime_udp_server::send_handler, this, message, _1, _2)
+            );
+        }
+    }
+
+    void send_handler(shared_ptr<string> message,
+                         const error_code& error, size_t bytes_transferred) {
+        // No good way to handle partial writes in this implementation.
+        // It's not clear from the API documentation whether the initial call
+        // to async_send_to will necessarily transfer all bytes.
+    }
+
+private:
+    shared_ptr<io_context> io;
+    udp::socket socket;
+    udp::endpoint remote_endpoint;
+    std::array<char,1024> receive_buffer;
+};
 
 int main() {
     auto io = make_shared<io_context>();
     daytime_tcp_server tcpServer{io, DAYTIME_PORT};
+    daytime_udp_server udpServer{io, DAYTIME_PORT};
     io->run();
 }
 
