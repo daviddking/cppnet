@@ -42,3 +42,5 @@ target_link_libraries(daytime_client_synch_tcp ${CMAKE_THREAD_LIBS_INIT})
 add_executable(daytime_server_asynch daytime_server_asynch.cpp daytime.h)
 target_link_libraries(daytime_server_asynch ${CMAKE_THREAD_LIBS_INIT})
 
+add_executable(http_server http_server.cpp)
+target_link_libraries(http_server ${CMAKE_THREAD_LIBS_INIT})

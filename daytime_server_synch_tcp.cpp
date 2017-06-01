@@ -11,13 +11,13 @@ using namespace std::chrono;
 using namespace std::experimental::net;
 using namespace std::experimental::net::ip;
 
-int const DAYTIME_PORT = 8013;
+int const HTTP_PORT = 8013;
 
 
 int main() {
     io_context io;
-    tcp::acceptor acceptor{io, tcp::endpoint{tcp::v4(), DAYTIME_PORT}};
-    cout << "Listening on TCP port " << DAYTIME_PORT << " ..." << endl;
+    tcp::acceptor acceptor{io, tcp::endpoint{tcp::v4(), HTTP_PORT}};
+    cout << "Listening on TCP port " << HTTP_PORT << " ..." << endl;
     for ( ;; ) {
         auto socket = acceptor.accept();
         socket.send(buffer(current_date_and_time()));

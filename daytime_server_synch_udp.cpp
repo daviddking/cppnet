@@ -10,12 +10,12 @@ using namespace std::chrono;
 using namespace std::experimental::net;
 using namespace std::experimental::net::ip;
 
-int const DAYTIME_PORT = 8013;
+int const HTTP_PORT = 8013;
 
 int main() {
     io_context io;
-    udp::socket socket{io, udp::endpoint{udp::v4(), DAYTIME_PORT}};
-    cout << "Listening on UDP port " << DAYTIME_PORT << "..." << endl;
+    udp::socket socket{io, udp::endpoint{udp::v4(), HTTP_PORT}};
+    cout << "Listening on UDP port " << HTTP_PORT << "..." << endl;
     std::array<char, 1024> receive_buffer;
     for ( ;; ) {
         udp::endpoint remote_endpoint;
