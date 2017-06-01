@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.7)
 project(cppnet)
 
 set(CMAKE_CXX_STANDARD 14)
-set(NETWORKING_TS_ROOT "/home/david/git/networking-ts-impl")
+set(NETWORKING_TS_ROOT "/home/dking/git/networking-ts-impl")
+#set(NETWORKING_TS_ROOT "/home/david/git/networking-ts-impl")
 #set(NETWORKING_TS_ROOT "/Users/dking/git/networking-ts-impl")
 
 # Requires boost
