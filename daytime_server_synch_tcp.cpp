@@ -1,9 +1,9 @@
-#include "clion_syntax_highlight.h"
 #include <iostream>
 #include <experimental/net>
 #include "daytime.h"
 
 #pragma clang diagnostic push
+#pragma ide diagnostic ignored "CannotResolve"
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 
 using namespace std;

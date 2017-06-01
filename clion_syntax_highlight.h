@@ -1,7 +1,0 @@
-#ifndef CPPNET_CLION_SYNTAX_HIGHLIGHTING_H
-#define CPPNET_CLION_SYNTAX_HIGHLIGHTING_H
-
-// Clion syntax highlighting workarounds
-#define NET_TS_HAS_MOVE 1
-
-#endif //CPPNET_CLION_SYNTAX_HIGHLIGHTING_H

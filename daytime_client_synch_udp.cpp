@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
 
     std::array<char,1024> receive_buffer;
     udp::endpoint local_endpoint;
+    // Does the API support timeouts on blocking operations?
     size_t length = socket.receive_from(buffer(receive_buffer), local_endpoint);
 
     cout.write(receive_buffer.data(), length);
