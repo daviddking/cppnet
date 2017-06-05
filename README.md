@@ -18,7 +18,7 @@ Modify cppnet/CMakeLists.txt
 set(NETWORKING_TS_ROOT "your-path-here/networking-ts-impl")
 ~~~
 
-## Build with the GCC 8.0 standard library
+## Build with Jonathan Wakely's branch of the GCC 8.0 standard library
 
 ~~~
 git clone https://github.com/daviddking/gcc
