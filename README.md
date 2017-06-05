@@ -1,5 +1,11 @@
 # C++ Networking TS Examples
 
+## Get the example source code:
+
+~~~
+git clone git@github.com:daviddking/cppnet.git
+~~~
+
 ## Build with Chris Kohlhoff's Networking TS implementation
 
 ~~~
