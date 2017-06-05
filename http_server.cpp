@@ -32,8 +32,9 @@ public:
     void start() {
         client_socket.async_read_some(
                 buffer(request_buffer, MAX_REQUEST_SIZE),
-                std::bind(&http_connection::read_handler, this, _1, _2)
-        );
+                [this](const error_code& error, size_t bytes_transferred) {
+                    read_handler(error, bytes_transferred);
+                });
     }
 
     void read_handler(const error_code& error, size_t bytes_transferred) {
@@ -45,8 +46,9 @@ public:
             else {
                 client_socket.async_read_some(
                         buffer(request_buffer, MAX_REQUEST_SIZE),
-                        std::bind(&http_connection::read_handler, this, _1, _2)
-                );
+                        [this](const error_code& error2, size_t bytes_transferred2) {
+                            read_handler(error2, bytes_transferred2);
+                        });
             }
         }
     }
@@ -81,8 +83,9 @@ public:
 
         client_socket.async_write_some(
                 buffer(response_buffer),
-                std::bind(&http_connection::write_handler, this, _1, _2)
-        );
+                [this](const error_code& error2, size_t bytes_transferred2) {
+                    write_handler(error2, bytes_transferred2);
+                });
     }
 
     void write_handler(const error_code& error, size_t bytes_transferred) {
@@ -91,10 +94,10 @@ public:
             if (response_length_written < response_buffer.length()) {
                 client_socket.async_write_some(
                         buffer(response_buffer.substr(response_length_written)),
-                        std::bind(&http_connection::write_handler, this, _1, _2)
-                );
-            }
-            else {
+                        [this](const error_code& error2, size_t bytes_transferred2) {
+                            write_handler(error2, bytes_transferred2);
+                        });
+            } else {
                 close();
             }
         }
@@ -130,10 +133,13 @@ public:
     }
 
     void start_accept() {
-        acceptor.async_accept(std::bind(&http_server::accept_handler, this, _1, _2));
+        acceptor.async_accept(
+                [this](const error_code& error, tcp::socket client_socket) {
+                    accept_handler(error, std::move(client_socket));
+                });
     }
 
-    void accept_handler(const error_code& error, tcp::socket client_socket) {
+    void accept_handler(const error_code& error, tcp::socket&& client_socket) {
         if (!error) {
             auto client_connection = make_shared<http_connection>(this, std::move(client_socket));
             connections.push_back(client_connection);

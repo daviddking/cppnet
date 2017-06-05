@@ -29,7 +29,9 @@ public:
         result = current_date_and_time();
         client_socket.async_write_some(
                 buffer(result),
-                std::bind(&daytime_tcp_connection::write_handler, this, _1, _2));
+                [this](const error_code& error, size_t bytes_transferred){
+                   write_handler(error, bytes_transferred);
+                });
     }
 
     void write_handler(const error_code& error, size_t bytes_transferred) {
@@ -41,7 +43,9 @@ public:
                 // Perhaps a more stateful buffer class would help?
                 client_socket.async_write_some(
                         buffer(result.substr(total_bytes_written)),
-                        std::bind(&daytime_tcp_connection::write_handler, this, _1, _2));
+                        [this](const error_code& error2, size_t bytes_transferred2){
+                            write_handler(error2, bytes_transferred2);
+                        });
             }
         }
     }
@@ -63,10 +67,13 @@ public:
     }
 
     void start_accept() {
-        acceptor.async_accept(std::bind(&daytime_tcp_server::accept_handler, this, _1, _2));
+        acceptor.async_accept(
+                [this](const error_code& error, tcp::socket client_socket) {
+                    accept_handler(error, std::move(client_socket));
+                });
     }
 
-    void accept_handler(const error_code& error, tcp::socket client_socket) {
+    void accept_handler(const error_code& error, tcp::socket&& client_socket) {
         if (!error) {
             auto client_connection = make_shared<daytime_tcp_connection>(std::move(client_socket));
             connections.push_back(client_connection);
@@ -94,8 +101,9 @@ public:
        socket.async_receive_from(
             buffer(receive_buffer),
             remote_endpoint,
-            std::bind(&daytime_udp_server::receive_handler, this, _1, _2)
-       );
+            [this](const error_code& error, size_t bytes_transferred) {
+                receive_handler(error, bytes_transferred);
+            });
     }
 
     void receive_handler(const error_code& error, size_t bytes_transferred) {
@@ -104,24 +112,13 @@ public:
             socket.async_send_to(
                     buffer(*message),
                     remote_endpoint,
-                    std::bind(&daytime_udp_server::send_handler, this, message, 0, _1, _2)
-            );
+                    [this](const error_code& error2, size_t bytes_transferred2) {
+                        // do nothing. packet should be fully written when
+                        // this is called.
+                    });
         }
     }
 
-    void send_handler(shared_ptr<string> message, size_t total_bytes_transferred,
-                         const error_code& error, size_t bytes_transferred) {
-        // Handle partial writes
-        total_bytes_transferred += bytes_transferred;
-        if (total_bytes_transferred < message->length()) {
-            socket.async_send_to(
-                    buffer(message->substr(total_bytes_transferred)),
-                    remote_endpoint,
-                    std::bind(&daytime_udp_server::send_handler, this,
-                              message, total_bytes_transferred, _1, _2)
-            );
-        }
-    }
 
 private:
     shared_ptr<io_context> io;
