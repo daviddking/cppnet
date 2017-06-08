@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 
     // DNS query for IP endpoint
     udp::resolver resolver{io};
-    auto results = resolver.resolve(udp::v4(), argv[1], argv[2]);
+    auto results = resolver.resolve(argv[1], argv[2]);
 
     // Choose the first endpoint
     udp::endpoint remote_endpoint = results.begin()->endpoint();
@@ -34,5 +34,4 @@ int main(int argc, char* argv[]) {
     size_t length = socket.receive_from(buffer(receive_buffer), local_endpoint);
 
     cout.write(receive_buffer.data(), length);
-
 }
